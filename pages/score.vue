@@ -22,22 +22,19 @@ export default {
       confettiInterval: null,
     };
   },
+  async fetch({ params }) {
+    this.score = params.score || 0;
+  },
   beforeDestroy() {
     if (this.confettiInterval) {
       clearInterval(this.confettiInterval); // Limpiar el intervalo
     }
   },
   mounted() {
+    this.score = parseInt(this.$route.query.score) || 0;
     this.launchConfetti();
   },
-  async asyncData({ params, error }) {
-    try {
-      const score = params.score || 0;
-      return { score };
-    } catch (e) {
-      error({ statusCode: 404, message: "Page not found" });
-    }
-  },
+
   methods: {
     launchConfetti() {
       // Lanzar confetti inmediatamente al cargar
