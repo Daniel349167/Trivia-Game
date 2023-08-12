@@ -12,7 +12,6 @@
     <select
       v-model="selectedCategory"
       class="form-select"
-      v-if="categories.length"
     >
       <option disabled value=0>Selecciona la categoría</option>
       <option
@@ -73,7 +72,7 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 10px; /* Añade un espacio entre los selectores */
+  gap: 10px; 
 }
 
 .form-select {

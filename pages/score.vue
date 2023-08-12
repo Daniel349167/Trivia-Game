@@ -1,11 +1,13 @@
 <template>
   <div class="score-view">
     <div class="trophy-icon">
-      <!-- Aquí puedes agregar tu icono o imagen de trofeo. 
-           Por ejemplo, usando Font Awesome: -->
       <i class="fas fa-trophy"></i>
     </div>
-    <h2>Felicitaciones hicistes {{ score }} puntos</h2>
+    <h2 class="congrats-text">
+      Felicitaciones!!<span class="mobile-break"><br /></span> hicistes
+      <span class="score-value">{{ score }}</span> puntos
+    </h2>
+
     <div class="button-group">
       <button class="play-again" @click="goToIndex">Volver a jugar</button>
       <button class="share">Compartir</button>
@@ -78,6 +80,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   height: 97vh;
 }
 
@@ -119,5 +122,20 @@ h2 {
 
 .share:hover {
   background-color: #f0f0f0;
+}
+
+.mobile-break {
+  display: none;
+}
+
+.score-value {
+  color: red; 
+  font-weight: bold; 
+}
+
+@media (max-width: 768px) {
+  .mobile-break {
+    display: inline;
+  }
 }
 </style>

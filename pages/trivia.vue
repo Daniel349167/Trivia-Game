@@ -246,24 +246,24 @@ export default {
 
 .timer-bar-wrapper {
   position: relative;
-  height: 20px; /* La misma altura que .timer-bar */
+  height: 20px; 
   background-color: white;
   margin-bottom: 20px;
-  border-radius: 2px; /* Esto dará esquinas redondeadas. Ajusta el valor según tus preferencias. */
-  overflow: hidden; /* Asegura que el contenido interno no sobresalga las esquinas redondeadas. */
+  border-radius: 2px; 
+  overflow: hidden; 
 }
 
 .timer-bar {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%; /* Asegura que tenga la altura completa del wrapper */
-  z-index: 1; /* Para que la barra esté debajo del mensaje */
+  height: 100%; 
+  z-index: 1; 
   transition: width 1s linear;
 }
 
 .border-red {
-  border: 0.5px solid white; /* Ajusta el grosor y estilo del borde según lo prefieras */
+  border: 0.5px solid white; 
 }
 
 .time-up-message {
@@ -298,7 +298,7 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 10px;
   cursor: pointer;
-  border-radius: 10px; /* Esta línea hace que los cuadrados sean un poco redondeados */
+  border-radius: 10px; 
   transition: background-color 0.5s, transform 0.3s;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
@@ -309,12 +309,12 @@ export default {
 }
 
 .answer-box:hover:not(.clicked) {
-  background-color: #f0f0f0; /* Color de fondo cuando el mouse pasa por encima */
+  background-color: #f0f0f0; 
   transform: scale(1.05);
 }
 
 .score-box {
-  position: fixed; /* Posicionamiento fijo para que se quede en su lugar al hacer scroll */
+  position: fixed; 
   top: 20px;
   right: 220px;
   padding: 5px 10px;
@@ -324,7 +324,7 @@ export default {
 }
 
 .button-container {
-  position: fixed; /* Posicionamiento fijo para que se quede en su lugar al hacer scroll */
+  position: fixed; 
   bottom: 50px;
   right: 220px;
 }
@@ -341,10 +341,11 @@ export default {
 
 .confirm-button.confirm {
   background-color: #0056b3;
+  transition: background-color 0.3s ease; 
 }
 
 .confirm-button:hover {
-  background-color: #4caf50;
+  background-color: #0073e6; 
 }
 
 .confirm-button.next {
@@ -352,7 +353,7 @@ export default {
 }
 
 .confirm-button.next:hover {
-  background-color: #007bff; /* azul oscuro al pasar el ratón por encima */
+  background-color: #007bff; 
 }
 
 .answer-box.selected.correct {
@@ -368,14 +369,14 @@ export default {
 }
 
 .answer-box.correct::after {
-  content: "\2713"; /* Check mark */
+  content: "\2713"; 
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
 }
 .answer-box.incorrect::after {
-  content: "\2717"; /* Cross mark */
+  content: "\2717"; 
   position: absolute;
   right: 10px;
   top: 50%;
@@ -383,7 +384,7 @@ export default {
 }
 
 .timer-bar.time-up {
-  background-color: red; /* Cambia el color de fondo de la barra a rojo cuando el tiempo se agote */
+  background-color: red; 
 }
 
 .time-up-message {
@@ -413,7 +414,7 @@ export default {
 .time-up-message .fa-clock {
   margin-right: 5px;
 }
-/* Por defecto, el ancho es auto */
+
 .elemento {
   width: auto;
 }
@@ -421,16 +422,25 @@ body {
   overflow-x: hidden;
 }
 
-/* Estilo específico para pantallas de menos de 600px de ancho */
+.category {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #0073e6; 
+  transition: color 0.3s; 
+}
+
+
+
+
 @media only screen and (max-width: 600px) {
-  /* Solo para vistas móviles (menos de 768px de ancho) */
+  
   .elemento {
-    margin-top: 50px;
+    margin-top: 55px;
     width: 90vw;
   }
   .trivia-container {
     padding: 10px;
-    width: 95%;
+    width: 100%;
   }
 
   .button-container {
@@ -439,23 +449,23 @@ body {
 
   .score-box,
   .button-container {
-    right: 10px; /* ajusta este valor */
+    right: 10px; 
   }
 
   .answer-box {
-    width: 100%; /* Las respuestas ocuparán todo el ancho en dispositivos móviles */
-    margin: 5px 0; /* Ajustar márgenes para más coherencia */
+    width: 100%; 
+    margin: 5px 0; 
   }
 
   .question-title {
-    font-size: 16px; /* Reducir el tamaño de fuente para preguntas */
-    text-align: left; /* Alinear a la izquierda */
-    padding: 0 10px; /* Un poco de padding para que el texto no toque el borde */
+    font-size: 16px; 
+    text-align: center; 
+    padding: 0 10px; 
   }
 
   .category {
-    text-align: left; /* Alinear a la izquierda */
-    padding: 0 10px; /* Un poco de padding para que el texto no toque el borde */
+    text-align: center; 
+    padding: 0 10px; 
   }
 }
 </style>

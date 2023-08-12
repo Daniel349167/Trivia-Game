@@ -58,18 +58,12 @@ export default {
           );
         });
 
-        // Si la categoría seleccionada es 15, navega a la página de trivia especial
-        if (this.selectedCategory == 15) {
-          this.$router.push({
-            path: "/trivia-games",
-            query: { questions: JSON.stringify(this.questions) },
-          });
-        } else {
+        
           this.$router.push({
             path: "/trivia",
             query: { questions: JSON.stringify(this.questions) },
           });
-        }
+        
       } catch (error) {
         console.error("Error al obtener preguntas:", error);
       }
