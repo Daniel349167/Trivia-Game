@@ -2,16 +2,20 @@
   <div class="elemento">
     <div class="score-box">Score: {{ puntuacion }}</div>
     <div class="trivia-container" v-if="currentQuestion">
-      <div class="timer-bar-wrapper" :class="{ 'border-red': timeUp }">
+      <div
+        class="timer-bar-wrapper"
+        :class="[borderClass, { 'time-up': timeUp }]"
+      >
         <div
           class="timer-bar"
-          :class="[timerClass, { 'time-up': timeUp }]"
+          :class="[timerClass, { 'time-up': timeUp }, timerTextColorClass]"
           :style="{ width: timerWidth + '%' }"
         >
-          {{ remainingTime > 0 ? remainingTime + "s" : "0" }}
+          {{ remainingTime > 0 ? remainingTime + "s" : "" }}
         </div>
+
         <div v-if="timeUp" class="time-up-message">
-          <i class="fa-solid fa-clock"></i> Time's Up
+          <i class="fa-regular fa-clock"></i> Time's Up
         </div>
       </div>
 
@@ -67,6 +71,13 @@ export default {
     };
   },
   computed: {
+    timerTextColorClass() {
+      if (this.timerClass === "yellow") {
+        return "text-black";
+      }
+      return "text-white";
+    },
+
     isButtonDisabled() {
       if (this.timeUp) {
         return false;
@@ -86,12 +97,23 @@ export default {
     buttonClass() {
       return this.showConfirmIcon ? "confirm" : "next";
     },
+    borderClass() {
+      if (this.remainingTime <= 10 && this.remainingTime >= 6) {
+        return "border-green";
+      } else if (this.remainingTime <= 5 && this.remainingTime >= 3) {
+        return "border-black";
+      } else if (this.remainingTime <= 2 && this.remainingTime >= 0) {
+        return "border-red";
+      }
+      return "";
+    },
+
     timerClass() {
       if (this.remainingTime <= 10 && this.remainingTime >= 6) {
         return "green";
-      } else if (this.remainingTime <= 5 && this.remainingTime >= 2) {
+      } else if (this.remainingTime <= 5 && this.remainingTime >= 3) {
         return "yellow";
-      } else if (this.remainingTime <= 1 && this.remainingTime >= 0) {
+      } else if (this.remainingTime <= 2 && this.remainingTime >= 0) {
         return "red";
       }
       return ""; // valor por defecto
@@ -246,6 +268,17 @@ export default {
   text-align: center;
   animation: fadeIn 0.5s;
 }
+.timer-bar-wrapper.border-green {
+  border-color: #4caf50 !important;
+}
+
+.timer-bar-wrapper.border-black {
+  border-color: black !important;
+}
+
+.timer-bar-wrapper.border-red {
+  border-color: #B22222 !important;
+}
 
 .timer-bar.green {
   background-color: #4caf50 !important;
@@ -256,21 +289,24 @@ export default {
   height: 20px;
   background-color: white;
   margin-bottom: 20px;
-  border-radius: 2px;
+  border-radius: 6px;
   overflow: hidden;
+  border: 1px solid black;
+  transition: background-color 0.5s; /* añadido para suavizar el cambio de color */
+}
+.timer-bar-wrapper.time-up {
+  background-color: #B22222;
+  color: white;
 }
 
 .timer-bar {
   position: absolute;
+  color: white;
   top: 0;
   left: 0;
   height: 100%;
   z-index: 1;
   transition: width 1s linear;
-}
-
-.border-red {
-  border: 0.5px solid white;
 }
 
 .time-up-message {
@@ -400,13 +436,8 @@ export default {
   transform: translateY(-50%);
 }
 
-.timer-bar.time-up {
-  background-color: red;
-}
-
 .time-up-message {
   font-size: 14px;
-  color: red;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -444,6 +475,14 @@ body {
   margin-bottom: 20px;
   color: #0073e6;
   transition: color 0.3s;
+}
+
+.text-black {
+  color: black;
+}
+
+.text-white {
+  color: white;
 }
 
 @media only screen and (max-width: 600px) {
