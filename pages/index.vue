@@ -2,48 +2,94 @@
   <div class="outer-container">
     <div class="center-container">
       <h1 class="title">TRIVIA GAME</h1>
-      <CategorySelector />
-      <DifficultySelector />
+      <Selectores
+        :modelValueCategory="selectedCategory"
+        :modelValueDifficulty="selectedDifficulty"
+        @update:selectedCategory="selectedCategory = $event"
+        @update:selectedDifficulty="selectedDifficulty = $event"
+      />
+
       <button @click="startTrivia" class="start-button">Empezar</button>
     </div>
   </div>
 </template>
 
 <script>
+import Selectores from "../components/pantallainicio/Selectores";
+import axios from "axios";
+
 export default {
+  components: {
+    Selectores,
+  },
   data() {
     return {
-      // tus datos aquí
+      selectedCategory: 0,
+      selectedDifficulty: "",
+      questions: [],
     };
   },
   methods: {
-    startTrivia() {
-      // lógica del método aquí
-    }
-  }
-}
+    decodeHTMLEntities(text) {
+      const textArea = document.createElement("textarea");
+      textArea.innerHTML = text;
+      return textArea.value;
+    },
+
+    async startTrivia() {
+      if (!this.selectedCategory || !this.selectedDifficulty) {
+        alert("Por favor selecciona una categoría y dificultad");
+        return;
+      }
+
+      const API_URL = `https://opentdb.com/api.php?amount=10&category=${this.selectedCategory}&difficulty=${this.selectedDifficulty}&type=multiple`;
+
+      try {
+        const response = await axios.get(API_URL);
+        this.questions = response.data.results;
+
+        this.questions.forEach((question) => {
+          question.question = this.decodeHTMLEntities(question.question);
+          question.correct_answer = this.decodeHTMLEntities(
+            question.correct_answer
+          );
+          question.incorrect_answers = question.incorrect_answers.map(
+            (answer) => this.decodeHTMLEntities(answer)
+          );
+        });
+
+        // Navega a la página de trivia
+        this.$router.push({
+          path: "/trivia",
+          query: { questions: JSON.stringify(this.questions) },
+        });
+      } catch (error) {
+        console.error("Error al obtener preguntas:", error);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
 .outer-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Cambia de center a flex-start para mover el contenido hacia arriba */
-  padding-top: 20vh; /* Agrega un pequeño relleno en la parte superior para evitar que el contenido esté demasiado cerca del borde superior */
-  min-height: 70vh; /* Retorna a 100vh */
+  align-items: flex-start;
+  padding-top: 20vh;
+  min-height: 70vh;
 }
 
-/* Media query para pantallas de hasta 767px (móviles) */
 @media (max-width: 767px) {
   .outer-container {
-    padding-top: 25vh; /* Valor para móviles */
+    padding-top: 25vh;
   }
 }
 
 .center-container {
   display: flex;
   flex-direction: column;
-  gap: 10px; 
+  gap: 10px;
   align-items: center;
 }
 
@@ -54,21 +100,18 @@ export default {
   margin-bottom: 30px;
 }
 
-
 .start-button {
   margin-top: 20px;
-  background-color: black; /* fondo negro */
-  color: white; /* texto en blanco para mejor contraste con el fondo negro */
-  padding: 10px 27px; /* Ajusta el padding para cambiar las dimensiones del botón */
-  border: none; /* elimina cualquier borde por defecto */
-  cursor: pointer; /* muestra un cursor de mano cuando se pasa el ratón sobre el botón */
-  transition: 0.3s; /* animación suave al cambiar estados */
-  border-radius: 5px; /* Esquinas ligeramente redondeadas */
+  background-color: black;
+  color: white;
+  padding: 10px 27px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
 }
 
 .start-button:hover {
-  opacity: 0.8; /* efecto de opacidad al pasar el ratón por encima para una mejor interacción */
+  opacity: 0.8;
 }
-
-
 </style>
