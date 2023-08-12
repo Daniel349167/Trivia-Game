@@ -488,6 +488,7 @@ body {
 @media only screen and (max-width: 600px) {
   .elemento {
     width: 90vw;
+    margin-top: 85px;
   }
   .trivia-container {
     padding: 10px;
@@ -495,7 +496,11 @@ body {
   }
 
   .button-container {
-    margin-bottom: 80px;
+    margin-bottom: 70px;
+  }
+
+  .score-box {
+    margin-top: 15px !important;
   }
 
   .score-box,
