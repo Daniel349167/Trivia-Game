@@ -1,5 +1,5 @@
 Pasos para correr mi proyecto en Local.
-Hecha con vue y nuxt.js.
+Hecho con vue y nuxt.js.
 
 # Instalar dependencias
 $ npm install
