@@ -155,15 +155,19 @@ export default {
     proceedToNextQuestion() {
       this.selectedAnswer = null;
       this.remainingTime = 10;
-      this.timerWidth = 100; // Añadir esta línea para reiniciar el ancho del temporizador
-      this.timeUp = false; // Añadir esta línea para reiniciar el estado de 'Tiempo Agotado'
+      this.timerWidth = 100;
+      this.timeUp = false;
       this.startTimer();
       this.showConfirmIcon = true;
       this.buttonLabel = "Confirmar Respuesta";
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex += 1;
       } else {
-        alert("¡Fin del juego!");
+        // Redirecciona al jugador a la vista de puntuación
+        this.$router.push({
+          path: "/score",
+          query: { score: this.puntuacion },
+        });
       }
     },
 
@@ -368,9 +372,7 @@ export default {
   margin-bottom: 20px;
 }
 
-
 .time-up-message .fa-clock {
-  margin-right: 5px;  
+  margin-right: 5px;
 }
-
 </style>
