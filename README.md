@@ -1,8 +1,8 @@
 Pasos para correr mi proyecto en Local
-# install dependencies
+# Instalar dependencias
 $ npm install
 
-# serve with hot reload at localhost:3000
+# Ejecutar:
 $ npm run dev
 
 programa en ejecucion:
