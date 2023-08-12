@@ -8,7 +8,7 @@
           :class="[timerClass, { 'time-up': timeUp }]"
           :style="{ width: timerWidth + '%' }"
         >
-          {{ remainingTime }}s
+          {{ remainingTime > 0 ? remainingTime + "s" : "0" }}
         </div>
         <div v-if="timeUp" class="time-up-message">
           <i class="fa-solid fa-clock"></i> Time's Up
@@ -35,6 +35,7 @@
       </div>
       <div class="button-container">
         <button
+          :disabled="isButtonDisabled"
           @click="confirmOrProceed"
           class="confirm-button"
           :class="buttonClass"
@@ -66,6 +67,12 @@ export default {
     };
   },
   computed: {
+    isButtonDisabled() {
+      if (this.timeUp) {
+        return false;
+      }
+      return !this.selectedAnswer;
+    },
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
     },
@@ -159,7 +166,7 @@ export default {
       this.timeUp = false;
       this.startTimer();
       this.showConfirmIcon = true;
-      this.buttonLabel = "Confirmar Respuesta";
+      this.buttonLabel = "Confirm Answer";
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex += 1;
       } else {
@@ -246,24 +253,24 @@ export default {
 
 .timer-bar-wrapper {
   position: relative;
-  height: 20px; 
+  height: 20px;
   background-color: white;
   margin-bottom: 20px;
-  border-radius: 2px; 
-  overflow: hidden; 
+  border-radius: 2px;
+  overflow: hidden;
 }
 
 .timer-bar {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%; 
-  z-index: 1; 
+  height: 100%;
+  z-index: 1;
   transition: width 1s linear;
 }
 
 .border-red {
-  border: 0.5px solid white; 
+  border: 0.5px solid white;
 }
 
 .time-up-message {
@@ -298,7 +305,7 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 10px;
   cursor: pointer;
-  border-radius: 10px; 
+  border-radius: 10px;
   transition: background-color 0.5s, transform 0.3s;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
@@ -309,12 +316,12 @@ export default {
 }
 
 .answer-box:hover:not(.clicked) {
-  background-color: #f0f0f0; 
+  background-color: #f0f0f0;
   transform: scale(1.05);
 }
 
 .score-box {
-  position: fixed; 
+  position: fixed;
   top: 20px;
   right: 220px;
   padding: 5px 10px;
@@ -324,7 +331,7 @@ export default {
 }
 
 .button-container {
-  position: fixed; 
+  position: fixed;
   bottom: 50px;
   right: 220px;
 }
@@ -341,11 +348,11 @@ export default {
 
 .confirm-button.confirm {
   background-color: #0056b3;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 
 .confirm-button:hover {
-  background-color: #0073e6; 
+  background-color: #0073e6;
 }
 
 .confirm-button.next {
@@ -353,7 +360,17 @@ export default {
 }
 
 .confirm-button.next:hover {
-  background-color: #007bff; 
+  background-color: #007bff;
+}
+
+.confirm-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #b3b3b3;
+}
+
+.confirm-button:disabled:hover {
+  background-color: #b3b3b3;
 }
 
 .answer-box.selected.correct {
@@ -369,14 +386,14 @@ export default {
 }
 
 .answer-box.correct::after {
-  content: "\2713"; 
+  content: "\2713";
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
 }
 .answer-box.incorrect::after {
-  content: "\2717"; 
+  content: "\2717";
   position: absolute;
   right: 10px;
   top: 50%;
@@ -384,7 +401,7 @@ export default {
 }
 
 .timer-bar.time-up {
-  background-color: red; 
+  background-color: red;
 }
 
 .time-up-message {
@@ -425,17 +442,12 @@ body {
 .category {
   font-size: 18px;
   margin-bottom: 20px;
-  color: #0073e6; 
-  transition: color 0.3s; 
+  color: #0073e6;
+  transition: color 0.3s;
 }
 
-
-
-
 @media only screen and (max-width: 600px) {
-  
   .elemento {
-    margin-top: 55px;
     width: 90vw;
   }
   .trivia-container {
@@ -449,23 +461,23 @@ body {
 
   .score-box,
   .button-container {
-    right: 10px; 
+    right: 10px;
   }
 
   .answer-box {
-    width: 100%; 
-    margin: 5px 0; 
+    width: 100%;
+    margin: 5px 0;
   }
 
   .question-title {
-    font-size: 16px; 
-    text-align: center; 
-    padding: 0 10px; 
+    font-size: 16px;
+    text-align: center;
+    padding: 0 10px;
   }
 
   .category {
-    text-align: center; 
-    padding: 0 10px; 
+    text-align: center;
+    padding: 0 10px;
   }
 }
 </style>
